@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chartist</title>
+
+    <link rel="stylesheet" href="css/chartist.min.css">
+
+    <style>
+body {
+    font-family: sans-serif;
+}
+        .legend {
+            color: #ACB0B5;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .legend--inline .legend__item {
+            display: inline-block;
+            padding-right: 14px;
+        }
+        .legend__item {
+            position: relative;
+            padding-left: 16px;
+        }
+        .legend__item::before {
+            content: '';
+            display: block;
+            height: 13px;
+            width: 13px;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            border-radius: 2px;
+        }
+
+        .legend__item--series-a:before {
+            background-color: #58BFE9;
+        }
+        .legend__item--series-b:before {
+            background-color: #8ACFEC;
+        }
+
+        .ct-chart {
+            border-bottom: 1px solid #D0D5DA;
+        }
+
+        .ct-series-b .ct-bar {
+            stroke: #8ACFEC;
+        }
+        .ct-series-a .ct-bar {
+            stroke: #58BFE9;
+        }
+
+        .legend__item--series-a {
+            background-color: ;
+        }
+
+        .chartist-tooltip {
+  position: absolute;
+  display: inline-block;
+  opacity: 0;
+  min-width: 5em;
+  padding: .5em;
+  background: #F4C63D;
+  color: #453D3F;
+  font-family: Oxygen,Helvetica,Arial,sans-serif;
+  font-weight: 700;
+  text-align: center;
+  pointer-events: none;
+  z-index: 1;
+  -webkit-transition: opacity .2s linear;
+  -moz-transition: opacity .2s linear;
+  -o-transition: opacity .2s linear;
+  transition: opacity .2s linear; }
+  .chartist-tooltip:before {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    margin-left: -15px;
+    border: 15px solid transparent;
+    border-top-color: #F4C63D; }
+  .chartist-tooltip.tooltip-show {
+    opacity: 1; }
+    </style>
+</head>
+<body>
+
+    <h1>Chartist</h1>
+
+        <ul class="legend legend--inline">
+            <li class="legend__item legend__item--series-a">Sent</li>
+            <li class="legend__item legend__item--series-b">Opened</li>
+        </ul>
+
+        <div class="ct-chart ct-perfect-fourth"></div>
+
+        <!-- Site content goes here !-->
+        <script src="../data.js"></script>
+        <script src="js/chartist.min.js"></script>
+        <script src="js/chartist-plugin-tooltip.js"></script>
+
+ <script>
+new Chartist.Bar('.ct-chart', {
+
+    labels: DAYS,
+    series: [ OPENED, SENT ]
+},  {
+  plugins: [
+    Chartist.plugins.tooltip()
+  ],
+    stackBars: true,
+    showLabel: false,
+    axisX: {
+        showGrid: false,
+        showLabel: false,
+        offset: 0
+    },
+    axisY: {
+        showGrid: false,
+        showLabel: false,
+        offset: 0
+    },
+    chartPadding: 0
+}).on('draw', function(data) {
+
+    if(data.type === 'bar') {
+        data.element.attr({
+            style: 'stroke-width: 10px'
+        });
+    }
+});
+</script>
+
+</body>
+
+</html>

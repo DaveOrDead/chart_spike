@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chart JS</title>
+
+    <style>
+body {
+    font-family: sans-serif;
+}
+        .legend {
+            color: #ACB0B5;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .legend--inline .legend__item {
+            display: inline-block;
+            padding-right: 14px;
+        }
+        .legend__item {
+            position: relative;
+            padding-left: 16px;
+        }
+        .legend__item span {
+            display: inline-block;
+            height: 13px;
+            width: 13px;
+            margin-right: 3px;
+        }
+
+        #canvas {
+            border-bottom: 1px solid #D0D5DA;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>ChartJS</h1>
+        <script src="../data.js"></script>
+        <!-- Site content goes here !-->
+        <script src="js/Chart.min.js"></script>
+        <script src="js/Chart.StackedBar.js"></script>
+        <div id="legend"></div>
+        <div>
+            <canvas id="canvas" height="450" width="600"></canvas>
+        </div>
+
+
+    <script>
+    var barChartData = {
+        labels : DAYS,
+        datasets : [
+            {
+                label : 'Sent',
+                fillColor : "#58BFE9",
+                data : SENT
+            },
+            {
+                label: 'Opened',
+                fillColor : "#8ACFEC",
+                data : OPENED
+            }
+        ],
+    }
+    window.onload = function(){
+        var ctx = document.getElementById("canvas").getContext("2d");
+        window.myBar = new Chart(ctx).StackedBar(barChartData, {
+            responsive : true,
+            barShowStroke: false,
+            showScale: false,
+            showLegend: true,
+            //String - A legend template
+    legendTemplate : "<ul class=\"legend legend--inline\"><% for (var i=0; i<datasets.length; i++){%><li class=\"legend__item\"><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
+
+        });
+        var legendHolder = document.createElement('div');
+legendHolder.innerHTML = myBar.generateLegend();
+
+document.getElementById('legend').appendChild(legendHolder.firstChild);
+    }
+
+    </script>
+
+</body>
+
+</html>
